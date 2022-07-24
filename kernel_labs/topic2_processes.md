@@ -6,11 +6,11 @@
 ## Struct task\_struct (PCB of the linux kernel)
 1. Processes and threads both are represented as task\_struct with flags differentiating both.
 
-2. Threads
-	a. It is a basic unit that the kernel process scheduler uses to allow applications to run the CPU. 
-	b. Each thread has its own stack and together with register values it determines thread execution state. 
-	c. All threads of a process share the process's resources.
-	d. Kernel schedules threads not processes and user level threads are not visible in kernel. 
+2. Threads  
+	a. It is a basic unit that the kernel process scheduler uses to allow applications to run the CPU.   
+	b. Each thread has its own stack and together with register values it determines thread execution state.   
+	c. All threads of a process share the process's resources.  
+	d. Kernel schedules threads not processes and user level threads are not visible in kernel.   
 	
 ## Clone syscall
 1. A new thread/process is created with clone(). The fork syscall and pthread\_create() use the clone call.
@@ -30,27 +30,27 @@
 1. Task states and transitions between them:
 //insert diag here
 
-2. Blocking the current thread
-	a. set the current thread state to TASK_UINTERRUPTIBLE or TASK_INTERRUPTIBLE
-	b. Add the task to a waiting queue
-	c. Call the scheduler which will pick up a new task from the READY queue
-	d. Do the context switch to the new task
+2. Blocking the current thread  
+	a. set the current thread state to TASK_UINTERRUPTIBLE or TASK_INTERRUPTIBLE  
+	b. Add the task to a waiting queue  
+	c. Call the scheduler which will pick up a new task from the READY queue  
+	d. Do the context switch to the new task  
 
-3. Waking up a task
-	a. Select a task from waiting queue
-	b. Set the task state to TASK_READY
-	c. Insert the task into the scheduler's READY queue
+3. Waking up a task  
+	a. Select a task from waiting queue  
+	b. Set the task state to TASK_READY  
+	c. Insert the task into the scheduler's READY queue  
 	d. On SMP system this is a complex operation: each processor has its own queue, queues need to be balanced, CPUs needs to be signaled  
 
-## Preemption	
-1. Non preemptive kernel
-In this, tasks are not preempted while running in kernel mode (syscalls), so there are no synchronization issues.
+## Preemption  
+1. Non preemptive kernel  
+In this, tasks are not preempted while running in kernel mode (syscalls), so there are no synchronization issues.  
 
-2. Preemptive kernel
-	a. Task can be preempted in kernel mode, requires using a special synchronization primitives: preempt_disable and preempt_enable.
-	b. Preemption is disabled automatically when a spinlock is used.
+2. Preemptive kernel  
+	a. Task can be preempted in kernel mode, requires using a special synchronization primitives: preempt_disable and preempt_enable.  
+	b. Preemption is disabled automatically when a spinlock is used.  
 	
-## Process context
+## Process context  
 1. The kernel is executing in process context when it is running a system call.
 
 2. In process context there is a well defined context and we can access the current process data with current
